@@ -1,0 +1,64 @@
+﻿@page
+@using System.Linq
+@model dotnetthanks.DetailsModel
+<div class="text-center">
+    <h1>Thanks</h1>
+</div>
+
+<div>
+    .NET is an open-source project and is very thankful for the many community contributions it receives.
+</div>
+
+<h1>dotnet/@Model.CurrentRepo.Name</h1>
+
+<div class="row">
+@if (Model.LoadTags)
+{
+   
+    var rl = Model.CurrentRepo.Releases.OrderByDescending(o => o.Id).ToList();
+
+    @for (int i=0; i<rl.Count; i++)
+    {
+        if (i > 0 && i % 3 == 0)
+        {
+            @:</div><div class="row">
+        }
+
+        <div class="col">
+                <h3>
+                    <a href="/details/@Model.CurrentRepo.Name/@rl[i].Tag">
+                    @if (String.IsNullOrEmpty(rl[i].Name)) { @rl[i].Tag } else { @rl[i].Name } &nbsp;&gt;
+                    </a>
+                </h3>
+                
+                @rl[i].Tag<br/>
+                <b>@rl[i].Contributors.Count.ToString()</b> people<br/>
+                <b>@rl[i].Contributions.ToString()</b> contributions
+        </div>
+    }
+}
+</div>
+
+
+
+
+@if (Model.LoadRelease)
+{
+    <h1>@Model.CurrentRelease.Name Contributors</h1>
+    <hr color="#512bd4" width="400px">
+    <a href="/details/@Model.CurrentRepo.Name">Back to all releases</a><br />
+    <div>We have had @Model.CurrentRelease.Contributions.ToString() to @Model.CurrentRelease.Tag. Thank you so much!</div>
+
+    <div class="row">
+        <div class="col">Name</div>
+        <div class="col">Contributions</div>
+    </div>
+
+    @foreach (var c in Model.CurrentRelease.Contributors.OrderByDescending(p => p.Count).ToList())
+    {
+        <div class="row">
+            <div class="col">@c.Name</div>
+            <div class="col">@c.Count.ToString()</div>
+        </div>
+    }
+}
