@@ -26,7 +26,7 @@ namespace dotnetthanks
             services.AddSingleton<IRepos, Repos>();
             services.AddRazorPages(options =>
                 {
-                    options.Conventions.AddPageRoute("/Details", "/{route}/{repo}/{tag?}");
+                    options.Conventions.AddPageRoute("/Index", "/{tag?}");
                 }
 
             );

@@ -10,10 +10,10 @@ namespace dotnetthanks
         public Repos()
         {
             _items = new List<Repo>();
-            _items.Add(new AspNetCore());
+            //_items.Add(new AspNetCore());
             _items.Add(new Core());
-            _items.Add(new Sdk());
-            _items.Add(new Runtime());
+            //_items.Add(new Sdk());
+            //_items.Add(new Runtime());
         }
 
         private  List<Repo> _items;
@@ -122,6 +122,18 @@ namespace dotnetthanks
         {
             var data = System.IO.File.ReadAllText(dataFile);
             Releases = JsonSerializer.Deserialize<List<Release>>(data);
+
+            // filter the releases that have 0 contributions.
+            Releases.RemoveAll(r => r.Contributions == 0);
+
+            // Clean up bot contributors
+            foreach (var rel in Releases)
+            {
+                rel.Contributors.FindAll(c => c.Name.StartsWith("dotnet-maestro")).ForEach(p => rel.Contributions -= p.Count);
+                rel.Contributors.RemoveAll(c => c.Name.StartsWith("dotnet-maestro"));
+            }
+
+            
         }
 
         public Release ReleaseByTag(string tag)

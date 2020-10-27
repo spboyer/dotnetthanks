@@ -1,23 +1,71 @@
 ﻿@page
-@model IndexModel
-@{
-    ViewData["Title"] = ".NET Contributors";
-}
-
-<div class="text-center">
+@using System.Linq
+@model dotnetthanks.IndexModel
+<div class="text-left">
     <h1>Thanks</h1>
 </div>
 
 <div>
     .NET is an open-source project and is very thankful for the many community contributions it receives.
 </div>
-<H2>.NET Core Open Source Repositories</H2>
+
 <div class="row">
-  <div class="col"><a href="/details/aspnetcore">aspnetcore</a></div>
-  <div class="col"><a href="/details/core">core</a></div>
-  <div class="col"><a href="/details/runtime">runtime</a></div>
-  <div class="col"><a href="/details/sdk">sdk</a></div>
+@if (Model.LoadTags)
+{
+   
+    var rl = Model.CurrentRepo.Releases.OrderByDescending(o => o.Id).ToList();
+
+    @for (int i=0; i<rl.Count; i++)
+    {
+        if (i > 0 && i % 3 == 0)
+        {
+            @:</div><div class="row">
+        }
+
+        <div class="col">
+                <h3>
+                    <a href="/@rl[i].Tag">
+                    @if (String.IsNullOrEmpty(rl[i].Name)) { @rl[i].Tag } else { @rl[i].Name } &nbsp;&gt;
+                    </a>
+                </h3>
+                
+                @rl[i].Tag<br/>
+                <b>@rl[i].Contributors.Count.ToString()</b> people<br/>
+                <b>@rl[i].Contributions.ToString()</b> contributions
+        </div>
+    }
+}
 </div>
 
 
 
+
+@if (Model.LoadRelease)
+{
+    <h1>@Model.CurrentRelease.Name Contributors</h1>
+    <br/>
+
+    <a href="/">Back to all releases</a><br />
+    <div>We have had @Model.CurrentRelease.Contributions.ToString() to @Model.CurrentRelease.Tag. Thank you so much!</div>
+
+    <br/>
+
+    <div class="row">
+        <div class="col">Name</div>
+        <div class="col">Contributions</div>
+    </div>
+
+    @foreach (var c in Model.CurrentRelease.Contributors.OrderBy(c => c.Name).ToList())
+    {
+        <div class="row">
+            <div class="col">
+                <a href="@c.Link" target="_blank">@c.Name</a><br clear="all"/>
+                @foreach (var contrib in c.Repos)
+                {
+                    <em>@contrib.Name (@contrib.Count),&nbsp;</em>
+                }
+            </div>
+            <div class="col">@c.Count.ToString()</div>
+        </div>
+    }
+}

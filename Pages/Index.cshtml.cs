@@ -1,28 +1,49 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
 
-
-namespace dotnetthanks.Pages
+namespace dotnetthanks
 {
     public class IndexModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
+        private readonly string reponame = "core";
+        public string tag {get;set;}
+
+        public Repo CurrentRepo {get;set;}
+        public Release CurrentRelease {get;set;}
+        public bool LoadRelease {get;set;} = false;
+        public bool LoadTags {get;set;} = false;
+
+        private IRepos repos;
+
+        public IndexModel(IRepos repos)
+        {
+            this.repos  = repos;
+        }
+
+        public void OnGet()
+        {
+                
+            CurrentRepo =  repos.Items.Find(r => r.Name == reponame);
            
-        public IndexModel(ILogger<IndexModel> logger)
-        {
-            _logger = logger;
-        }
+            if (RouteData.Values["tag"] != null)
+            {
+                this.tag = RouteData.Values["tag"].ToString();
+                CurrentRelease = CurrentRepo.ReleaseByTag(tag);
+            }
+           
 
-        
-        public void Get()
-        {
+           if (!string.IsNullOrEmpty(tag))
+           {
+               LoadRelease = true;
+           }
+           else
+           {
+               LoadTags = true;
+           }
         }
-
     }
-
 }
