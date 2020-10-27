@@ -18,8 +18,7 @@ namespace dotnetthanks.Pages
             _logger = logger;
         }
 
-        public string Message { get; private set; } = "PageModel in C#";
-
+        
         public void Get()
         {
         }
