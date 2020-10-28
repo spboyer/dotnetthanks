@@ -40,10 +40,22 @@
 @if (Model.LoadRelease)
 {
     <h1>@Model.CurrentRelease.Name Contributors</h1>
+    <h4>Repositories:
+
+         @for (var i=0; i< Model.CurrentRelease.ChildRepos.Count; i++)
+         {
+             <em>@Model.CurrentRelease.ChildRepos[i].Name</em>
+             @if (i < Model.CurrentRelease.ChildRepos.Count)
+            {
+                <span>,</span>
+            }   
+         }
+
+    </h4>
     <br/>
 
     <a href="/">Back to all releases</a><br />
-    <div>We have had @Model.CurrentRelease.Contributions.ToString() to @Model.CurrentRelease.Tag. Thank you so much!</div>
+    <div>We have had @Model.CurrentRelease.Contributions.ToString() contributions to @Model.CurrentRelease.Tag. Thank you so much!</div>
 
     <br/>
 
