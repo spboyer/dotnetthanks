@@ -1,80 +1,103 @@
 ﻿@page
 @using System.Linq
 @model dotnetthanks.IndexModel
-
-<div class=title x-hidden-focus>
-    .NET is an open-source project and is very thankful for the many community contributions it receives.
-</div>
-
-<div class="row">
-@if (Model.LoadTags)
-{
-   
-    var rl = Model.CurrentRepo.Releases.OrderByDescending(o => o.Id).ToList();
-
-    @for (int i=0; i<rl.Count; i++)
-    {
-        if (i > 0 && i % 3 == 0)
-        {
-            @:</div><div class="row">
-        }
-
-        <div class="col">
-                <h3>
-                    <a href="/@rl[i].Tag">
-                    @if (String.IsNullOrEmpty(rl[i].Name)) { @rl[i].Tag } else { @rl[i].Name } &nbsp;&gt;
-                    </a>
-                </h3>
-                
-                @rl[i].Tag<br/>
-                <b>@rl[i].Contributors.Count.ToString()</b> people<br/>
-                <b>@rl[i].Contributions.ToString()</b> contributions
-        </div>
-    }
-}
-</div>
-
-
-
-
-@if (Model.LoadRelease)
-{
-    <h1>@Model.CurrentRelease.Name Contributors</h1>
-    <h4>Repositories:
-
-         @for (var i=0; i< Model.CurrentRelease.ChildRepos.Count; i++)
-         {
-             <em>@Model.CurrentRelease.ChildRepos[i].Name</em>
-             @if (i < Model.CurrentRelease.ChildRepos.Count)
-            {
-                <span>,</span>
-            }   
-         }
-
-    </h4>
-    <br/>
-
-    <a href="/">Back to all releases</a><br />
-    <div>We have had @Model.CurrentRelease.Contributions.ToString() contributions to @Model.CurrentRelease.Tag. Thank you so much!</div>
-
-    <br/>
-
-    <div class="row">
-        <div class="col">Name</div>
-        <div class="col">Contributions</div>
-    </div>
-
-    @foreach (var c in Model.CurrentRelease.Contributors.OrderBy(c => c.Name).ToList())
-    {
-        <div class="row">
-            <div class="col">
-                <a href="@c.Link" target="_blank">@c.Name</a><br clear="all"/>
-                @foreach (var contrib in c.Repos)
+<div class="swim-container">
+    <div class="swim pt-60 pb-60 pt-60">
+        <div class="container">
+            @* <div class="text-center">
+                <h2>Some Text Here</h2>
+                <p class="mb-60">
+                    "Some subtitle text here"
+                </p> 
+            </div>*@
+       
+            <div class="media-grid">
+                <div class="row">
+                @if (Model.LoadTags)
                 {
-                    <em>@contrib.Name (@contrib.Count),&nbsp;</em>
+                
+                    var rl = Model.CurrentRepo.Releases.OrderByDescending(o => o.Id).ToList();
+
+                    @for (int i=0; i<rl.Count; i++)
+                    {
+                        if (i > 0 && i % 3 == 0)
+                        {
+                            @:</div><div class="row">
+                        }
+
+                        <div class="col-lg-4">
+                            <a href="/@rl[i].Tag">
+                                <div class="media">
+                                    <div class="media-left" aria-hidden="true">
+                                        <span class="ms-Icon ms-Icon--Globe"></span>
+                                    </div>
+                                    <div id="web-desc" class="media-body">
+                                        <h2 class="media-heading">@if (String.IsNullOrEmpty(rl[i].Name)) { @rl[i].Tag } else { @rl[i].Name }</h2>
+                                        <p>
+                                            @rl[i].Tag<br/>
+                                            <b>@rl[i].Contributors.Count.ToString()</b> people<br/>
+                                            <b>@rl[i].Contributions.ToString()</b> contributions
+                                        </p>
+                                    </div>
+                                </div>    
+                            </a>
+                        </div>
+                    }
                 }
+                </div>
+
+                <div class="container">
+                    
+
+                    @if (Model.LoadRelease)
+                    {
+
+                        <div class="text-center">
+                            <h2>@Model.CurrentRelease.Name Contributors</h2>
+                            <p class="mb-40">
+                                 @for (var i=0; i< Model.CurrentRelease.ChildRepos.Count; i++)
+                                {
+                                    <span class="gh-label" style="background: #ededed; color: black">@Model.CurrentRelease.ChildRepos[i].Name</span>
+                                }
+                                <br />
+                                <a href="/">Back to all releases</a><br />
+                                We have had @Model.CurrentRelease.Contributions.ToString() contributions to @Model.CurrentRelease.Tag. Thank you so much!
+                            </p>
+                        </div>
+
+                        
+                        <div class="row row-flex text-center">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col">Name</div>
+                                    <div class="col">Contributions</div>
+                                </div>
+
+                                @foreach (var c in Model.CurrentRelease.Contributors.OrderBy(c => c.Name).ToList())
+                                {
+                                    <div class="row">
+                                        <div class="col">
+                                            <a class="gh-issue-title" href="@c.Link" target="_blank">@c.Name</a><br clear="all"/>
+                                            @foreach (var contrib in c.Repos)
+                                            {
+                                                <span class="gh-label" style="background: #ededed; color: black">@contrib.Name (@contrib.Count)</span>
+                                            }
+                                        </div>
+                                        <div class="col">@c.Count.ToString()</div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        
+                    }
+                </div>
+
+
             </div>
-            <div class="col">@c.Count.ToString()</div>
         </div>
-    }
-}
+        
+    </div>
+</div>
+
+
+
