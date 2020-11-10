@@ -31,7 +31,7 @@ jobs:
       # Runs a set of commands using the runners shell
       # Use docker login to log into ACR 
       - name: Docker login to ACR
-        run: az acr login shayne
+        run: az acr login -n shayne
         #uses: azure/docker-login@v1
         #with:
          # comment out the login-server parameter if using docker hub
