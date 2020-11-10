@@ -41,7 +41,7 @@ jobs:
      # Build and push your image to Azure Container Registry 
       - name: Build and Push container to ACR
         run: |
-          docker build --file=dotnetthanks/Dockerfile -t ${{ secrets.CONTAINER_REGISTRY_NAME }}/${{ secrets.IMAGE_NAME }}:${{ github.sha }} .
+          docker build --file=Dockerfile -t ${{ secrets.CONTAINER_REGISTRY_NAME }}/${{ secrets.IMAGE_NAME }}:${{ github.sha }} .
           docker push ${{ secrets.CONTAINER_REGISTRY_NAME }}/${{ secrets.IMAGE_NAME }}:${{ github.sha }}  
 
       - name: Deploy to Azure Web App for Containers
