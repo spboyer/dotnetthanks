@@ -31,12 +31,13 @@ jobs:
       # Runs a set of commands using the runners shell
       # Use docker login to log into ACR 
       - name: Docker login to ACR
-        uses: azure/docker-login@v1
-        with:
+        run: az acr login shayne
+        #uses: azure/docker-login@v1
+        #with:
          # comment out the login-server parameter if using docker hub
-          login-server: shayne.azurecr.io
-          username: ${{ secrets.CONTAINER_REGISTRY_USERNAME }}
-          password: ${{ secrets.CONTAINER_REGISTRY_PASSWORD }}
+          #login-server: shayne.azurecr.io
+          #username: ${{ secrets.CONTAINER_REGISTRY_USERNAME }}
+          #password: ${{ secrets.CONTAINER_REGISTRY_PASSWORD }}
 
      # Build and push your image to Azure Container Registry 
       - name: Build and Push container to ACR
