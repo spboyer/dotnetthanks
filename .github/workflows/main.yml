@@ -31,40 +31,17 @@ jobs:
       # Runs a set of commands using the runners shell
       # Use docker login to log into ACR 
       - name: Docker login to ACR
-        run: az acr login -n shayne
-        #uses: azure/docker-login@v1
-        #with:
-         # comment out the login-server parameter if using docker hub
-          #login-server: shayne.azurecr.io
-          #username: ${{ secrets.CONTAINER_REGISTRY_USERNAME }}
-          #password: ${{ secrets.CONTAINER_REGISTRY_PASSWORD }}
+        run: az acr login -n ${{ secrets.CONTAINER_NAME }}
 
      # Build and push your image to Azure Container Registry 
       - name: Build and Push container to ACR
         run: |
-          docker build --file=Dockerfile -t shayne.azurecr.io/${{ secrets.IMAGE_NAME }}:${{ github.sha }} .
+          docker build --file=Dockerfile -t ${{ secrets.CONTAINER_NAME }}.azurecr.io/${{ secrets.IMAGE_NAME }}:${{ github.sha }} .
           docker push shayne.azurecr.io/${{ secrets.IMAGE_NAME }}:${{ github.sha }}  
 
       - name: Deploy to Azure Web App for Containers
         # You may pin to the exact commit or the version.
-        uses: FrodeHus/azwebapp-container-action@v1
-        with:
-          # Service Principal with Contributor role on the Web App
-          service_principal: dotnetthanks
-          # Service Principal password
-          service_principal_password: ${{ secrets.SERVICE_PRINCIPAL_PASSWORD }}
-          # The tenant where all the web app resources are placed
-          tenant: ${{ secrets.TENANT_ID }}
-          # The name of the Azure Container Registry, minus the .azurecr.io
-          registry: shayne
-          # Docker image name
-          image: ${{ secrets.IMAGE_NAME }}
-          # Docker image tag
-          tag: ${{ github.sha }}
-          # Name of the Azure Web App for Containers instance
-          webapp_name: ${{ secrets.APP_NAME }}
-          # Name of the resource group with the web app resides
-          resource_group: ${{ secrets.APP_NAME }}
+        run: az webapp config container set -n ${{ secrets.APP_NAME }} -g ${{ secrets.APP_NAME }} --docker-custom-image-name shayne.azurecr.io/${{ secrets.IMAGE_NAME }}:${{ github.sha }} --docker-registry-server-url https://${{ secrets.CONTAINER_REGISTRY_NAME }} 
 
         
         
