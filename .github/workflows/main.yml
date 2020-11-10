@@ -41,12 +41,11 @@ jobs:
      # Build and push your image to Azure Container Registry 
       - name: Build and Push container to ACR
         run: |
-          docker build --file=Dockerfile -t ${{ secrets.CONTAINER_REGISTRY_NAME }}/${{ secrets.IMAGE_NAME }}:${{ github.sha }} .
-          docker push ${{ secrets.CONTAINER_REGISTRY_NAME }}/${{ secrets.IMAGE_NAME }}:${{ github.sha }}  
+          docker build --file=Dockerfile -t shayne.azurecr.io/${{ secrets.IMAGE_NAME }}:${{ github.sha }} .
+          docker push shayne.azurecr.io/${{ secrets.IMAGE_NAME }}:${{ github.sha }}  
 
       - name: Deploy to Azure Web App for Containers
         # You may pin to the exact commit or the version.
-        # uses: FrodeHus/azwebapp-container-action@67da4c2bbf5b1382a6fd1adfc54f8b3bfb3ef270
         uses: FrodeHus/azwebapp-container-action@v1
         with:
           # Service Principal with Contributor role on the Web App
