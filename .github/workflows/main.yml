@@ -34,7 +34,7 @@ jobs:
         uses: azure/docker-login@v1
         with:
          # comment out the login-server parameter if using docker hub
-          login-server: ${{ secrets.CONTAINER_REGISTRY_NAME }}
+          login-server: shayne.azurecr.io
           username: ${{ secrets.CONTAINER_REGISTRY_USERNAME }}
           password: ${{ secrets.CONTAINER_REGISTRY_PASSWORD }}
 
