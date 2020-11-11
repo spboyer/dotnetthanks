@@ -24,6 +24,7 @@ namespace dotnetthanks
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IRepos, Repos>();
+            services.AddSingleton<AppVersionInfo>();
             services.AddRazorPages(options =>
                 {
                     options.Conventions.AddPageRoute("/Index", "/{tag?}");

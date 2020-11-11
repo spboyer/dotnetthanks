@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@inject AppVersionInfo appInfo
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -58,6 +59,15 @@
         <div class="container">
             &copy; 2020 - .NET Thanks <a href="https://github.com/spboyer/dotnetthanks">Source</a>
         </div>
+
+        <cache expires-after="@TimeSpan.FromDays(30)">
+            <div class="container copyright">&copy; Copyright @DateTime.Now.Year, 
+                <a href="https://www.twitter.com/spboyer">Shayne Boyer</a>. 
+                Powered by @System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription
+                built and deployed from <a href="https://github.com/spboyer/dotnetthanks">github/spboyer/dotnetthanks</a>
+                via build <a href="https://github.com/spboyer/dotnetthanks/runs/@appInfo.BuildNumber?check_suite_focus=true">@appInfo.BuildNumber</a>
+            </div>
+        </cache>
     </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
