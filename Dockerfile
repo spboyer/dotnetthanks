@@ -14,7 +14,7 @@ WORKDIR "/src/."
 RUN dotnet build "dotnetthanks.csproj" -c Release -o /app/build /p:SourceRevisionId=$sourceversion
 
 FROM build AS publish
-RUN dotnet publish "dotnetthanks.csproj" -c Release -o /app/publish
+RUN dotnet publish "dotnetthanks.csproj" -c Release -o /app/publish /p:SourceRevisionId=$sourceversion
 
 FROM base AS final
 WORKDIR /app
