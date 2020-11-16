@@ -10,10 +10,7 @@ namespace dotnetthanks
         public Repos()
         {
             _items = new List<Repo>();
-            //_items.Add(new AspNetCore());
             _items.Add(new Core());
-            //_items.Add(new Sdk());
-            //_items.Add(new Runtime());
         }
 
         private  List<Repo> _items;
