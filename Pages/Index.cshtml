@@ -10,7 +10,7 @@
                 @if (Model.LoadTags)
                 {
                 
-                    var rl = Model.CurrentRepo.Releases.OrderByDescending(o => o.Id).ToList();
+                    var rl = Model.CurrentRepo.Releases.OrderByDescending(o => o.Tag, SemVer2Comparer.Instance).ToList();
 
                     @for (int i=0; i<rl.Count; i++)
                     {

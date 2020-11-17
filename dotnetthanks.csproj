@@ -11,4 +11,8 @@
     <AssemblyInformationalVersion>$(AssemblyVersion).*.*+123345</AssemblyInformationalVersion>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="NuGet.Versioning" Version="5.8.0" />
+  </ItemGroup>
+
 </Project>
