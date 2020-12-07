@@ -1,5 +1,5 @@
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
 
 namespace dotnetthanks
@@ -126,8 +126,8 @@ namespace dotnetthanks
             // Clean up bot contributors
             foreach (var rel in Releases)
             {
-                rel.Contributors.FindAll(c => c.Name.StartsWith("dotnet-maestro")).ForEach(p => rel.Contributions -= p.Count);
-                rel.Contributors.RemoveAll(c => c.Name.StartsWith("dotnet-maestro"));
+                rel.Contributors.FindAll(c => c.Name.StartsWith("dotnet-maestro", StringComparison.OrdinalIgnoreCase)).ForEach(p => rel.Contributions -= p.Count);
+                rel.Contributors.RemoveAll(c => c.Name.StartsWith("dotnet-maestro", StringComparison.OrdinalIgnoreCase));
             }
 
             
