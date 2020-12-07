@@ -22,7 +22,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/">.NET</a>
+                <a class="navbar-brand" asp-area="" asp-page="/" style="text-decoration: none!important;">.NET</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -57,9 +57,8 @@
 
     <footer class="border-top footer text-muted">
         <cache expires-after="@TimeSpan.FromDays(30)">
-            <div class="container copyright">&copy; Copyright @DateTime.Now.Year, 
-                <a href="https://www.twitter.com/spboyer">Shayne Boyer</a>. 
-                Powered by @System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription
+            <div class="container copyright">&copy;<a href="https://www.microsoft.com">Microsoft</a>. 
+                Powered by <a href="https://dotnet.microsoft.com/learn/aspnet/what-is-aspnet-core">@System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription</a>
                 built and deployed from <a href="https://github.com/spboyer/dotnetthanks">spboyer/dotnetthanks</a>
                 via build <a href="https://github.com/spboyer/dotnetthanks/actions/runs/@appInfo.BuildNumber">@appInfo.BuildNumber</a>
             </div>
