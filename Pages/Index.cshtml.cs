@@ -24,26 +24,28 @@ namespace dotnetthanks
             this.repos  = repos;
         }
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
-                
-            CurrentRepo =  repos.Items.Find(r => r.Name == reponame);
+
+            return RedirectPermanent("https://thanks.dot.net");
+
+           // CurrentRepo =  repos.Items.Find(r => r.Name == reponame);
            
-            if (RouteData.Values["tag"] != null)
-            {
-                this.tag = RouteData.Values["tag"].ToString();
-                CurrentRelease = CurrentRepo.ReleaseByTag(tag);
-            }
+           // if (RouteData.Values["tag"] != null)
+           // {
+           //     this.tag = RouteData.Values["tag"].ToString();
+           //     CurrentRelease = CurrentRepo.ReleaseByTag(tag);
+           // }
            
 
-           if (!string.IsNullOrEmpty(tag))
-           {
-               LoadRelease = true;
-           }
-           else
-           {
-               LoadTags = true;
-           }
+           //if (!string.IsNullOrEmpty(tag))
+           //{
+           //    LoadRelease = true;
+           //}
+           //else
+           //{
+           //    LoadTags = true;
+           //}
         }
     }
 }
